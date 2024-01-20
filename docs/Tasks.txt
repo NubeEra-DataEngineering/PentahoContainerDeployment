@@ -1,0 +1,17 @@
+NEW
+BISERVER_VERSION=9.4 
+BISERVER_TAG=9.4.0.0-343 
+https://privatefilesbucket-community-edition.s3.us-west-2.amazonaws.com/${BISERVER_TAG}/ce/server/pentaho-server-ce-${BISERVER_TAG}.zip
+
+
+OLD
+BISERVER_VERSION=7.1 
+BISERVER_TAG=7.1.0.0-12 
+https://downloads.sourceforge.net/project/pentaho/Business%20Intelligence%20Server/${BISERVER_VERSION}/pentaho-server-ce-${BISERVER_TAG}.zip
+
+
+
+pentaho-server-ce-7.1.0.0-12.zip
+
+pentaho/pentaho-server/data/postgresql/create_quartz_postgresql.sql
+E:\Pentaho\pentaho-server-ce-8.3.0.0-371.zip\pentaho-server\data\postgresql\

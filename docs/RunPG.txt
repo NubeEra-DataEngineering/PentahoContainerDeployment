@@ -1,0 +1,65 @@
+Using Dockerfile
+================
+cat<<EOF > CreateDB.sql
+CREATE TABLE web_origins (
+    client_id character varying(36) NOT NULL,
+    value character varying(255)
+);
+EOF
+
+cat <<EOF > docker-entrypoint.sh
+psql+=( --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" )
+
+        echo
+        for f in /docker-entrypoint-initdb.d/*; do
+            case "$f" in
+                *.sh)     echo "$0: running $f"; . "$f" ;;
+                *.sql)    echo "$0: running $f"; "${psql[@]}" < "$f"; echo ;;
+                *.sql.gz) echo "$0: running $f"; gunzip -c "$f" | "${psql[@]}"; echo ;;
+                *)        echo "$0: ignoring $f" ;;
+            esac
+            echo
+done
+EOF
+
+cat <<EOF > Dockerfile
+FROM postgres:9.3
+ENV POSTGRES_USER docker
+ENV POSTGRES_PASSWORD docker
+ENV POSTGRES_DB docker
+ADD CreateDB.sql /docker-entrypoint-initdb.d/
+EOF
+
+docker build -t mypgsql .
+
+docker images
+
+docker run -d mypgsql
+
+docker exec -it ContainerID bash
+
+root@ContainerID:/# psql -h localhost -p 5432 -U docker -d docker
+docker=# \c
+You are now connected to database "docker" as user "docker".
+docker=# \dt
+           List of relations
+ Schema |    Name     | Type  | Owner  
+--------+-------------+-------+--------
+ public | web_origins | table | docker
+(1 row)
+docker=# \du
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
+docker=# 
